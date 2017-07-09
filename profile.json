@@ -1,0 +1,23 @@
+{
+    "name": "BBC micro:bit",
+    "services": [{
+        "uuid": "E95D9882251D470AA062FA1922DFA9A8",
+        "name": "Button Service",
+        "characteristic": [{
+            "name": "button1state",
+            "uuid": "E95DDA90251D470AA062FA1922DFA9A8"
+        }, {
+            "name": "button2state",
+            "uuid": "E95DDA91251D470AA062FA1922DFA9A8"
+        }]
+    }, {
+        "uuid": "E95D6100251D470AA062FA1922DFA9A8",
+        "name": "Temperature Service",
+        "characteristic": [
+            {
+                "name": "Temperature",
+                "uuid": "E95D9250251D470AA062FA1922DFA9A8"
+            }
+        ]
+    }]
+}

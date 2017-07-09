@@ -2,6 +2,10 @@
 
 Workshop exercises for Web Bluetooth API used with BBC micro:bit BLE features
 
+## Micro:bit BLE specs
+
+[Bluetooth Developer Studio Level 3 Profile Report](https://lancaster-university.github.io/microbit-docs/resources/bluetooth/bluetooth_profile.html)
+
 ## How To
 
 ### Web Bluetooth API
