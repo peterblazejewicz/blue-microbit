@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>bluetooth-device-component demo</title>
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+    <link rel="import" href="../../paper-button/paper-button.html">
+    <link rel="import" href="../bluetooth-device-component.html">
+
+    <custom-style>
+      <style is="custom-style" include="demo-pages-shared-styles">
+      </style>
+    </custom-style>
+  </head>
+  <body>
+    <div class="vertical-section-container centered">
+      <h3>Basic bluetooth-device demo</h3>
+      <demo-snippet>
+        <template>
+            <paper-button raised>Browse devices</paper-button>
+            <bluetooth-device-component id="bluetooth-device"></bluetooth-device-component>
+        </template>
+      </demo-snippet>
+    </div>
+    <script>
+        let button = document.querySelector('paper-button');
+        button.addEventListener('click', _ => {
+            document.querySelector('#bluetooth-device')
+                .request()
+                .then(device => {
+                    console.log(device.name);
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        });
+    </script>
+  </body>
+</html>

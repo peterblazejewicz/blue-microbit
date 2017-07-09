@@ -1,0 +1,73 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="bluetooth-device-component">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+  </template>
+
+  <script>
+    (() => {
+        let SUPPORTED = 'bluetooth' in navigator;
+        if(!['BluetoothDevice'] in window){
+            window.BluetoothDevice = {};
+        }
+        /**
+        * `bluetooth-device-component`
+        * Bluetooth device discovery service
+        *
+        * @customElement
+        * @polymer
+        * @demo demo/index.html
+        */
+        class BluetoothDeviceComponent extends Polymer.Element {
+            static get is() { return 'bluetooth-device-component'; }
+            static get properties() {
+                return {
+                    device: {
+                        type: BluetoothDevice,
+                        notify: true,
+                        readOnly: true,
+                        observer: '_deviceChanged'
+                    },
+                    supported: {
+                        type: Boolean,
+                        readOnly: true,
+                        value: SUPPORTED
+                    }
+                };
+            }
+
+            request(){
+                console.log(this.request.name);
+                if(!this.supported) {
+                    return Promise.reject(new Error('Your browser does not support Bluetooth'));
+                }
+                if(this.device){
+                    this._deviceChanged();
+                    return Promise.resolve(this.device);
+                }
+                let options = {
+                    acceptAllDevices: true
+                }
+                let self = this;
+                return navigator.bluetooth.requestDevice(options)
+                    .then((device) => {
+                        self._setDevice(device);
+                        return self.device;
+                    });
+            }
+
+            _deviceChanged() {
+                console.log(this._deviceChanged.name);
+                // TBD
+            }
+        }
+        window.customElements.define(BluetoothDeviceComponent.is, BluetoothDeviceComponent);
+    })();
+  </script>
+</dom-module>
