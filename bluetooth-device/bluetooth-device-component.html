@@ -38,7 +38,23 @@
                         type: Boolean,
                         readOnly: true,
                         value: SUPPORTED
-                    }
+                    },
+                    servicesFilter: {
+                        type: Array,
+                        observer: '_filterChanged'
+                    },
+                    nameFilter: {
+                        type: String,
+                        observer: '_filterChanged'
+                    },
+                    namePrefixFilter: {
+                        type: String,
+                        observer: '_filterChanged'
+                    },
+                    optionalServicesFilter: {
+                        type: Array,
+                        observer: '_filterChanged'
+                    },
                 };
             }
 
@@ -52,7 +68,25 @@
                     return Promise.resolve(this.device);
                 }
                 let options = {
-                    acceptAllDevices: true
+                    filters: []
+                };
+                if (this.servicesFilter) {
+                    options
+                        .filters.push({
+                            services: this.servicesFilter
+                        });
+                }
+                if (this.nameFilter) {
+                options.filters.push({name: this.nameFilter});
+                }
+                if (this.namePrefixFilter) {
+                options.filters.push({namePrefix: this.namePrefixFilter});
+                }
+                if (this.optionalServicesFilter) {
+                options.optionalServices = this.optionalServicesFilter;
+                }
+                if (options.filters.length == 0) {
+                    return Promise.reject(new Error('Please set Bluetooth options filters.'));
                 }
                 let self = this;
                 return navigator.bluetooth.requestDevice(options)
@@ -65,6 +99,10 @@
             _deviceChanged() {
                 console.log(this._deviceChanged.name);
                 // TBD
+            }
+
+            _filterChanged(){
+                this._setDevice(null);
             }
         }
         window.customElements.define(BluetoothDeviceComponent.is, BluetoothDeviceComponent);
