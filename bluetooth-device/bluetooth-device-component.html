@@ -4,10 +4,10 @@
   <template>
     <style>
       :host {
-        display: block;
+        display: none;
       }
     </style>
-    <h2>Hello [[prop1]]!</h2>
+    <slot id="services"></slot>
   </template>
 
   <script>
@@ -96,9 +96,19 @@
                     });
             }
 
+            disconnect() {
+                this._services = Polymer.dom(this.$.services).getDistributedNodes();
+                for(let service of this._services) {
+                    service.disconnectGattServer()
+                }
+            }
+
             _deviceChanged() {
                 console.log(this._deviceChanged.name);
-                // TBD
+                this._services = Polymer.dom(this.$.services).getDistributedNodes();
+                for(let service of this._services) {
+                    service._device = this.device;
+                }
             }
 
             _filterChanged(){

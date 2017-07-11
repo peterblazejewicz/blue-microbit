@@ -1,0 +1,36 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<dom-module id="bluetooth-service-component">
+    <template>
+        <slot>
+        </slot>
+    </template>
+    <script>
+        (() => {
+            class BluetoothServiceComponent extends Polymer.Element {
+                static get properties() {
+                    return {
+                        service: {
+                            type: String,
+                            observer: '_serviceChanged'
+                        },
+                        device: {
+                            type: BluetoothDevice,
+                            observer: '_deviceChanged'
+                        }
+                    }
+                }
+                constructor(){
+                    super()
+                }
+
+                _serviceChanged(){
+                    console.log(this._serviceChanged.name);
+                }
+                
+                _deviceChanged(){
+                    console.log(this._deviceChanged.name);
+                }
+            }
+        })();
+    </script>
+</dom-module>

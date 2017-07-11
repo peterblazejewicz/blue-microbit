@@ -12,6 +12,7 @@
     <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
     <link rel="import" href="../../paper-button/paper-button.html">
     <link rel="import" href="../bluetooth-device-component.html">
+    <link rel="import" href="../bluetooth-service-component.html">
 
     <custom-style>
       <style is="custom-style" include="demo-pages-shared-styles">
@@ -24,7 +25,10 @@
       <demo-snippet>
         <template>
             <paper-button raised>Browse devices</paper-button>
-            <bluetooth-device-component id="bluetooth-device" services='["e95d0753-251d-470a-a062-fa1922dfa9a8"]' name="BBC micro:bit"></bluetooth-device-component>
+            <bluetooth-device-component id="bluetooth-device" services='["e95d0753-251d-470a-a062-fa1922dfa9a8"]' name="BBC micro:bit">
+                <bluetooth-service-component service="e95d0753-251d-470a-a062-fa1922dfa9a8">
+                </bluetooth-service-component>
+            </bluetooth-device-component>
         </template>
       </demo-snippet>
     </div>
