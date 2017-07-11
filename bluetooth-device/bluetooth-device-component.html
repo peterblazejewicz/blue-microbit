@@ -39,19 +39,19 @@
                         readOnly: true,
                         value: SUPPORTED
                     },
-                    servicesFilter: {
+                    services: {
                         type: Array,
                         observer: '_filterChanged'
                     },
-                    nameFilter: {
+                    name: {
                         type: String,
                         observer: '_filterChanged'
                     },
-                    namePrefixFilter: {
+                    namePrefix: {
                         type: String,
                         observer: '_filterChanged'
                     },
-                    optionalServicesFilter: {
+                    optionalServices: {
                         type: Array,
                         observer: '_filterChanged'
                     },
@@ -70,23 +70,30 @@
                 let options = {
                     filters: []
                 };
-                if (this.servicesFilter) {
+                if (this.services) {
                     options
                         .filters.push({
-                            services: this.servicesFilter
+                            services: this.services
                         });
                 }
-                if (this.nameFilter) {
-                options.filters.push({name: this.nameFilter});
+                if (this.name) {
+                options.filters.push({name: this.name});
                 }
-                if (this.namePrefixFilter) {
-                options.filters.push({namePrefix: this.namePrefixFilter});
+                if (this.namePrefix) {
+                options.filters.push({namePrefix: this.namePrefix});
                 }
-                if (this.optionalServicesFilter) {
-                options.optionalServices = this.optionalServicesFilter;
+                if (this.optionalServices) {
+                options.optionalServices = this.optionalServices;
                 }
                 if (options.filters.length == 0) {
                     return Promise.reject(new Error('Please set Bluetooth options filters.'));
+                }
+                options = {
+                    filters: [
+                        {services: ['e95d93b1-251d-470a-a062-fa1922dfa9a8']}
+                        // {name: 'BBC micro:bit'}
+                    ],
+                    optionalServices: ['9b427142-df4f-4b51-a0b9-963d5a3a65f6']
                 }
                 let self = this;
                 return navigator.bluetooth.requestDevice(options)
