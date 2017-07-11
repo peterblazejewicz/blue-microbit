@@ -88,13 +88,6 @@
                 if (options.filters.length == 0) {
                     return Promise.reject(new Error('Please set Bluetooth options filters.'));
                 }
-                options = {
-                    filters: [
-                        {services: ['e95d93b1-251d-470a-a062-fa1922dfa9a8']}
-                        // {name: 'BBC micro:bit'}
-                    ],
-                    optionalServices: ['9b427142-df4f-4b51-a0b9-963d5a3a65f6']
-                }
                 let self = this;
                 return navigator.bluetooth.requestDevice(options)
                     .then((device) => {
