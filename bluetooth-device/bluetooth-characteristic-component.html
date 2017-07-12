@@ -1,0 +1,58 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<dom-module id="bluetooth-characteristic-component">
+    <template>
+        <style>
+            :host {
+                display: none;
+            }
+            :host::slotted(*) {
+                display: none;
+            }
+        </style>
+    </template>
+    <script>
+        (() => {
+            class BluetoothCharacteristicComponent extends Polymer.element {
+                static get is() { return 'bluetooth-characteristic-component'; }
+                static get properties() {
+                    return {
+                        characteristic: {
+                            type: String,
+                            obverver: '_characteristicChanged'
+                        },
+                        value: {
+                            type: DataView,
+                            observer: '_valueChanged',
+                            notify: true
+                        },
+                        autoWrite: {
+                            type: Boolean,
+                            reflectToAttribute: true,
+                            value: false
+                        },
+                        /* private */
+                        _device: {
+                            type: BluetoothDevice  
+                        },
+                        _server: {
+                            readOnly: true,
+                            type: BluetoothRemoteGATTServer
+                        },
+                        _service: {
+                            readOnly: true,
+                            type: BluetoothRemoteGATTService
+                        },
+                        _characteristic: {
+                            readOnly: true,
+                            type: BluetoothRemoteGATTCharacteristic
+                        }
+                    }
+                }
+                constructor(){
+                    super();
+                }
+            }
+            window.customElements.define(BluetoothCharacteristicComponent.is, BluetoothCharacteristicComponent);
+        })();
+    </script> 
+</dom-module>
