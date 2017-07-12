@@ -1,12 +1,20 @@
 <link rel="import" href="../polymer/polymer-element.html">
 <dom-module id="bluetooth-service-component">
     <template>
-        <slot>
-        </slot>
+        <style>
+            :host {
+                display: none;
+            }
+            :host::slotted(*) {
+                display: none;
+            }
+        </style>
+        <slot id="characteristics"></slot>
     </template>
     <script>
         (() => {
             class BluetoothServiceComponent extends Polymer.Element {
+                static get is() { return 'bluetooth-service-component';}
                 static get properties() {
                     return {
                         service: {
@@ -23,14 +31,35 @@
                     super()
                 }
 
+                created() {
+                    this._characteristics = [];
+                }
+
                 _serviceChanged(){
                     console.log(this._serviceChanged.name);
+                    this._characteristics = Polymer.dom(this.$.characteristics).getDistributedNodes();
+                    for(let characteristic of this._characteristics){
+                        characteristic.service = this.service;
+                    }
                 }
                 
                 _deviceChanged(){
                     console.log(this._deviceChanged.name);
+                    this._characteristics = Polymer.dom(this.$.characteristics).getDistributedNodes();
+                    for(let characteristic of this._characteristics){
+                        characteristic.device = this.device;
+                    }
+                }
+
+                disconnectGattServer(){
+                    console.log(this._deviceChanged.name);
+                    this._characteristics = Polymer.dom(this.$.characteristics).getDistributedNodes();
+                    for(let characteristic of this._characteristics){
+                        characteristic.disconnectGattServer && characteristic.disconnectGattServer();
+                    }
                 }
             }
+            window.customElements.define(BluetoothServiceComponent.is, BluetoothServiceComponent);
         })();
     </script>
 </dom-module>
