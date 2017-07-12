@@ -6,6 +6,9 @@
       :host {
         display: none;
       }
+      :host::slotted(*) {
+          display: none;
+      }
     </style>
     <slot id="services"></slot>
   </template>
@@ -97,15 +100,18 @@
             }
 
             disconnect() {
-                this._services = Polymer.dom(this.$.services).getDistributedNodes();
+                console.log(this.disconnect.name);
+                this._services = Polymer.dom(this.$.services)
+.getDistributedNodes();
                 for(let service of this._services) {
-                    service.disconnectGattServer()
+                    service.disconnectGattServer && service.disconnectGattServer()
                 }
             }
 
             _deviceChanged() {
                 console.log(this._deviceChanged.name);
-                this._services = Polymer.dom(this.$.services).getDistributedNodes();
+                this._services = Polymer.dom(this.$.services)
+.getDistributedNodes();
                 for(let service of this._services) {
                     service._device = this.device;
                 }
