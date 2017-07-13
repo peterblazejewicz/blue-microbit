@@ -1,19 +1,24 @@
+<!DOCTYPE html>
 <link rel="import" href="../polymer/polymer-element.html">
 <dom-module id="bluetooth-characteristic-component">
     <template>
         <style>
-            :host {
+             :host {
                 display: none;
             }
-            :host::slotted(*) {
+
+             :host::slotted(*) {
                 display: none;
             }
+
         </style>
     </template>
     <script>
         (() => {
             class BluetoothCharacteristicComponent extends Polymer.element {
-                static get is() { return 'bluetooth-characteristic-component'; }
+                static get is() {
+                    return 'bluetooth-characteristic-component';
+                }
                 static get properties() {
                     return {
                         characteristic: {
@@ -32,7 +37,7 @@
                         },
                         /* private */
                         _device: {
-                            type: BluetoothDevice  
+                            type: BluetoothDevice
                         },
                         _server: {
                             readOnly: true,
@@ -48,11 +53,70 @@
                         }
                     }
                 }
-                constructor(){
+                constructor() {
                     super();
                 }
+
+                _connectToDevice() {
+                    if (!this._device) {
+                        return Promise.reject(new Error('Bluetooth device is not connected'));
+                    }
+                    return this._device.gatt.connect()
+                        .then((server) => {
+                            this._set_server(server);
+                            return this._server;
+                        })
+                }
+
+                _getPrimaryService() {
+                    if (!this._server || !this._server.connected) {
+                        return Promise.reject(new Error('Bluetooth GATT Remote server is not connected.'));
+                    }
+                    if (!this.service) {
+                        return Promise.reject(new Error('Bluetooth GATT Primary Service is mandatory.'));
+                    }
+                    return this._server.getPrimaryService()
+                }
+
+                _getCharacteristic() {
+
+                }
+
+                _readCharacteristic() {
+
+                }
+
+                _writeCharacteristic(value) {
+
+                }
+
+                _handleValueChanged() {
+
+                }
+
+                _startNotifications() {
+
+                }
+
+                _stopNotifications() {}
+
+                _serviceChanged() {}
+
+                _characteristicChanged() {}
+
+                _disconnectGattServer() {}
+
+                read() {}
+
+                write() {}
+
+                startNotifications() {}
+
+                stopNotifications() {}
+
             }
             window.customElements.define(BluetoothCharacteristicComponent.is, BluetoothCharacteristicComponent);
         })();
-    </script> 
+
+    </script>
 </dom-module>
